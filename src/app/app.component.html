@@ -1,0 +1,45 @@
+<header class="d-flex align-items-center pb-3 mb-3 border-bottom">
+  <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+    <span class="fs-4">Traveller</span>
+  </a>
+</header>
+<form class="example-form">
+  <div class="example-button-row">
+    <label for="city" class="form-label">Search a city to start your journey</label>
+
+    <div class="input-group mb-3">
+      <input matInput class="form-control" id="city" [formControl]="search" [matAutocomplete]="auto">
+      <button (click)="onSearchClicked(); $event.preventDefault()" mat-fab color="accent">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let x of cities" [value]="x.name">
+        {{x.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+</form>
+
+<div [hidden]="hideTrip">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card" style="width: 18rem;" *ngIf="tripRoute.distance">
+        <div class="card-header">
+          <b>City in order to be visited</b>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let x of tripRoute.cities">{{x.name}} ({{x.countryName}})</li>
+        </ul>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><b>Distance traveled:</b> {{tripRoute.distance}} km</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <div id="map"></div>
+    </div>
+  </div>
+</div>
